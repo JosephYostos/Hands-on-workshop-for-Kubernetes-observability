@@ -1,7 +1,5 @@
 # Hands-on-workshop-for-Kubernetes-observability
 
-## Workshop objectives
-
 ## Use cases
 
 In this workship we are going to focus on these main use cases:
@@ -10,6 +8,14 @@ In this workship we are going to focus on these main use cases:
 - DNS dashboards for quick troubleshooting 
 - Dynamic Packet Capture to analyze traffic on a pod or collection of pods live 
 - Application (L7) observability
+
+
+## prerequisites 
+ Download this repo into your environment:
+
+    ```bash
+    git clone https://github.com/tigera-solutions/tigera-eks-workshop  
+    ```
 
 ## Module 0: observability tools overview
 
