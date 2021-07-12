@@ -11,12 +11,27 @@ In this workship we are going to focus on these main use cases:
 
 
 ## Prerequisites 
- Download this repo into your environment:
+1. Download this repo into your environment:
 
 ```bash
  git clone https://github.com/JosephYostos/Hands-on-workshop-for-Kubernetes-observability.git  
 ```
+2. Configure log aggregation and flush intervals.
 
+```bash
+ kubectl patch felixconfiguration.p default -p '{"spec":{"flowLogsFlushInterval":"10s"}}'
+ kubectl patch felixconfiguration.p default -p '{"spec":{"dnsLogsFlushInterval":"10s"}}'
+ kubectl patch felixconfiguration.p default -p '{"spec":{"flowLogsFileAggregationKindForAllowed":1}}'
+```
+
+3. Configure Felix for log data collection.
+
+    >[Felix](https://docs.tigera.io/reference/architecture/overview#felix) is one of Calico components that is responsible for configuring routes, ACLs, and anything else required on the host to provide desired connectivity for the endpoints on that host.
+
+```bash
+ kubectl patch felixconfiguration default --type='merge' -p '{"spec":{"policySyncPathPrefix":"/var/run/nodeagent","l7LogsFileEnabled":true}}'
+```
+    
 ## Module 0: Observability tools overview
 
 **Goal:** Explore Calico observability tools.
