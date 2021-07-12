@@ -117,16 +117,7 @@ Some of the default dashboards you get access to are DNS Logs, Flow Logs, Audit 
     kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/microservices-demo/master/release/kubernetes-manifests.yaml
     ```
 
-4. Deploy compliance reports.
-
-    >The reports will be needed for one of a later lab.
-
-    ```bash
-    kubectl apply -f demo/40-compliance-reports/daily-cis-results.yaml
-    kubectl apply -f demo/40-compliance-reports/cluster-reports.yaml
-    ```
-
-5. Deploy global alerts.
+4. Deploy global alerts.
 
     >The alerts will be explored in a later lab.
 
