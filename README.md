@@ -10,7 +10,7 @@ In this workship we are going to focus on these main use cases:
 - Application (L7) observability
 
 
-## prerequisites 
+## Prerequisites 
  Download this repo into your environment:
 
     ```bash
