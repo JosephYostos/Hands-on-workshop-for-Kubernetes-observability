@@ -13,9 +13,9 @@ In this workship we are going to focus on these main use cases:
 ## Prerequisites 
  Download this repo into your environment:
 
-    ```bash
-    git clone https://github.com/tigera-solutions/tigera-eks-workshop  
-    ```
+```bash
+ git clone https://github.com/tigera-solutions/tigera-eks-workshop  
+```
 
 ## Module 0: observability tools overview
 
