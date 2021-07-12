@@ -14,7 +14,7 @@ In this workship we are going to focus on these main use cases:
  Download this repo into your environment:
 
 ```bash
- git clone https://github.com/tigera-solutions/tigera-eks-workshop  
+ git clone https://github.com/JosephYostos/Hands-on-workshop-for-Kubernetes-observability.git  
 ```
 
 ## Module 0: observability tools overview
