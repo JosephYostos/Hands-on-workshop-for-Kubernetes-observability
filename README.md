@@ -51,7 +51,7 @@ In this workship we are going to focus on these main use cases:
     - Count of triggered alerts
     - Packets by Policy histogram that shows allowed and denied traffic as it is being evaluated by network policies
 
-    ![dashboard view](../../img/dashboard-view.png)
+    ![dashboard view](img/dashboard-view.png)
 
 2. Policies Board
 
