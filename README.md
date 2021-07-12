@@ -266,8 +266,8 @@ Some of the default dashboards you get access to are DNS Logs, Flow Logs, Audit 
 
 
 ## Problem:
-1. After few days Dev team reported an issue on centos app where they see an API calls are failing to twilio.com, although everything was working fine since we applied teh app.
-
+1. Few days later Dev team requested allowing TCP traffic between centos in dev ns and frontend service in default ns.
+2. it is also requested to allow centos pod to access api.twilio.com externally.
 
 ## Steps
 
