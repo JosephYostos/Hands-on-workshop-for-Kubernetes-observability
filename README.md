@@ -11,7 +11,7 @@ In this workship we are going to focus on these main use cases:
 - Dynamic Packet Capture to analyze traffic on a pod or collection of pods live 
 - Application (L7) observability
 
-## Module 1: observability tools overview
+## Module 0: observability tools overview
 
 **Goal:** Explore Calico observability tools.
 
@@ -76,4 +76,63 @@ In this workship we are going to focus on these main use cases:
 
     ![kibana flows](img/kibana-flow-logs.png)
 
-    Some of the default dashboards you get access to are DNS Logs, Flow Logs, Audit Logs, Kuernetes API calls, L7 HTTP metrics, and others.
+Some of the default dashboards you get access to are DNS Logs, Flow Logs, Audit Logs, Kuernetes API calls, L7 HTTP metrics, and others.
+
+# Module 1: Configuring Environment
+
+## Requirements:
+
+1- security and Kubernetes platform policies should be evaluated before any other policies.
+2- kubernetes platform team require an explicitly allow workloads to connect to kubernetes DNS component.
+3- online boutique microservices application to be deploied in default namespace & dev application to be deploied in dev namespace.
+
+
+## Steps
+
+1. Deploy policy tiers.
+
+    We are going to deploy some policies into policy tier to take advantage of hierarcical policy management.
+
+    ```bash
+    kubectl apply -f demo/tiers/tiers.yaml
+    ```
+
+    This will add tiers `security` and `platform` to the Calico cluster.
+
+2. Deploy base policy.
+
+    In order to explicitly allow workloads to connect to the Kubernetes DNS component, we are going to implement a policy that controls such traffic.
+
+    ```bash
+    kubectl apply -f demo/10-security-controls/allow-kube-dns.yaml
+    ```
+
+3. Deploy applications.
+
+    ```bash
+    # deploy dev app stack
+    kubectl apply -f demo/dev/app.manifests.yaml
+
+    # deploy boutiqueshop app stack
+    kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/microservices-demo/master/release/kubernetes-manifests.yaml
+    ```
+
+4. Deploy compliance reports.
+
+    >The reports will be needed for one of a later lab.
+
+    ```bash
+    kubectl apply -f demo/40-compliance-reports/daily-cis-results.yaml
+    kubectl apply -f demo/40-compliance-reports/cluster-reports.yaml
+    ```
+
+5. Deploy global alerts.
+
+    >The alerts will be explored in a later lab.
+
+    ```bash
+    kubectl apply -f demo/50-alerts/globalnetworkset.changed.yaml
+    kubectl apply -f demo/50-alerts/unsanctioned.dns.access.yaml
+    kubectl apply -f demo/50-alerts/unsanctioned.lateral.access.yaml
+    ```
+    
