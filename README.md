@@ -17,7 +17,7 @@ In this workship we are going to focus on these main use cases:
  git clone https://github.com/JosephYostos/Hands-on-workshop-for-Kubernetes-observability.git  
 ```
 
-## Module 0: observability tools overview
+## Module 0: Observability tools overview
 
 **Goal:** Explore Calico observability tools.
 
