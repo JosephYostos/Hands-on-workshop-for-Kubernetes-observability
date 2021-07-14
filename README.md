@@ -148,11 +148,16 @@ Some of the default dashboards you get access to are DNS Logs, Flow Logs, Audit 
     kubectl apply -f demo/50-alerts/unsanctioned.lateral.access.yaml
     ```
 
-# Module : Enable L7 Logs 
+# Module 2: Enable L7 Logs 
 
 L7 logs capture application interactions from HTTP header data in requests. Data shows what is actually sent in communications between specific pods, providing more specificity than flow logs. (Flow logs capture data only from connections for workload interactions).
 
 Calico collects L7 logs by sending the selected traffic through an Envoy proxy.
+
+## Requirements:
+
+1. Enable L7 logging on frontend deployment in default ns and dev-nginx in dev ns.
+
 
 ## Steps
 
@@ -188,7 +193,9 @@ Calico collects L7 logs by sending the selected traffic through an Envoy proxy.
     kubectl patch deployment <name of application deployment> -n <namespace> --patch "$(cat patch-envoy.yaml)"
     ```
 
-# Module 2: Using security controls
+After applying module 3 some traffic should be generated, go check the "L7 HTTP" dashboard in Kibana also the HTTP logs under the service graph section.   
+
+# Module 3: Using security controls
 
 **Goal:** Leverage network policies to segment connections within Kubernetes cluster and prevent known bad actors from accessing the workloads.
 
@@ -302,8 +309,32 @@ Calico collects L7 logs by sending the selected traffic through an Envoy proxy.
     # test connectivity from default namespace to the Internet
     kubectl exec -it $(kubectl get po -l app=loadgenerator -ojsonpath='{.items[0].metadata.name}') -- sh -c 'curl -m3 -sI www.google.com 2>/dev/null | grep -i http'
     ```
+ 
+ # Module 4: Alerts
+ 
+ **Goal:** Use global alerts to notify security and operations teams about unsanctioned or suspicious activity.
+ 
+ ## Tasks:
+ 
+ 1. Some alerts have been triggered. Examine these alerts and identify what suspicious activity led to this.
+   
+ ## Steps
+
+1. View triggered alerts.
+
+    >We implemented alerts in one of the first labs in order to see how our activity can trigger them.
+
+    Open `Alerts` view to see all triggered alerts in the cluster. Review the generated alerts.
+
+    ![alerts view](../img/alerts-view.png)
+
+    You can also review the alerts configuration and templates by navigating to alerts configuration in the top right corner.
     
- # Module 3: Using egress access controls
+2. Review alerts manifests.
+
+    Navigate to `demo/50-alerts` and review YAML manifests that represent alerts definitions. Each file containes an alert template and alert definition. Alerts templates can be used to quickly create an alert definition in the UI.
+ 
+ # Module x: Using egress access controls
 
 
 ## Problem:
@@ -373,7 +404,7 @@ Calico collects L7 logs by sending the selected traffic through an Envoy proxy.
 
     >As a bonus example, you can modify the `external-apis` network set to include `*.google.com` domain name which would allow access to Google subdomains. If you do it, you can would allow acess to subdomains like `www.google.com`, `docs.google.com`, etc.
 
-# Module 4: Dynamic packet capture
+# Module x: Dynamic packet capture
 
 **Goal:** Configure packet capture for specific pods and review captured payload.
 
