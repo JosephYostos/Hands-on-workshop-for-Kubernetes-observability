@@ -332,7 +332,7 @@ After completeing module 3 some traffic should be generated, go check the "L7 HT
 
     Open `Alerts` view to see all triggered alerts in the cluster. Review the generated alerts.
 
-    ![alerts view](../img/alerts-view.png)
+    ![alerts view](img/alerts-view.png)
 
     You can also review the alerts configuration and templates by navigating to alerts configuration in the top right corner.
     
@@ -340,11 +340,12 @@ After completeing module 3 some traffic should be generated, go check the "L7 HT
 
     Navigate to `demo/50-alerts` and review YAML manifests that represent alerts definitions. Each file containes an alert template and alert definition. Alerts templates can be used to quickly create an alert definition in the UI.
  
- # Module x: Using egress access controls
+ # Module 5: Using egress access controls & Flow Visualizations 
 
 
-## Problem:
-1. Few days later Dev team requested allowing TCP traffic between centos in dev ns and frontend service in default ns.
+## Tasks:
+
+1. Dev team raised a request to allow traffic between dev and default namspaces as they are developing a new service to integrate with the boutiqueshop app, use flow visualization to identify which pods are trying to talk to each other. 
 2. it is also requested to allow centos pod to access api.twilio.com externally.
 
 ## Steps
@@ -355,7 +356,7 @@ After completeing module 3 some traffic should be generated, go check the "L7 HT
 
     ```bash
     # test connectivity from dev namespace to default namespace
-    kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://frontend.default 2>/dev/null | grep -i http'
+    for i in {1..10}; do kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://frontend.default 2>/dev/null | grep -i http'; sleep 2; done
     ```
 
     b. Test connectivity from `dev/centos` to the external endpoint.
@@ -367,7 +368,11 @@ After completeing module 3 some traffic should be generated, go check the "L7 HT
 
     The access should be denied as the policies configured in previous module do not allow it.
 
-2. Implement egress policy to allow egress access from a workload in one namespace, e.g. `dev/centos`, to a service in another namespace, e.g. `default/frontend`.
+3. nivigate in the flow visualizations chart to find out the source and destinations pods, also you can use policy recommendations to find out what traffic needs to be allowed 
+
+ ![flow-visualization-m5](img/flow-visualization-m5.png)
+
+5. Implement egress policy to allow egress access from a workload in one namespace, e.g. `dev/centos`, to a service in another namespace, e.g. `default/frontend`.
 
     a. Deploy egress policy.
 
@@ -410,7 +415,7 @@ After completeing module 3 some traffic should be generated, go check the "L7 HT
 
     >As a bonus example, you can modify the `external-apis` network set to include `*.google.com` domain name which would allow access to Google subdomains. If you do it, you can would allow acess to subdomains like `www.google.com`, `docs.google.com`, etc.
 
-# Module x: Dynamic packet capture
+# Module 6: Dynamic packet capture
 
 **Goal:** Configure packet capture for specific pods and review captured payload.
 
