@@ -105,7 +105,7 @@ Some of the default dashboards you get access to are DNS Logs, Flow Logs, Audit 
 
 1. security and Kubernetes platform policies should be evaluated before any other policies.
 2. kubernetes platform team require an explicitly allow workloads to connect to kubernetes DNS component.
-3. online boutique microservices application to be deploied in default namespace & dev application to be deploied in dev namespace.
+3. online boutique microservices application to be deployed in default namespace & dev application to be deployed in dev namespace.
 
 
 ## Steps
