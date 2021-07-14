@@ -193,7 +193,13 @@ Calico collects L7 logs by sending the selected traffic through an Envoy proxy.
     kubectl patch deployment <name of application deployment> -n <namespace> --patch "$(cat patch-envoy.yaml)"
     ```
 
-After applying module 3 some traffic should be generated, go check the "L7 HTTP" dashboard in Kibana also the HTTP logs under the service graph section.   
+After completeing module 3 some traffic should be generated, go check the "L7 HTTP" dashboard in Kibana also the HTTP logs under the service graph section.   
+
+
+![L7 HTTP Dashboard](img/L7-http-kibana.png)
+
+![Service Graph HTTP](img/service-graph-http.png)
+
 
 # Module 3: Using security controls
 
