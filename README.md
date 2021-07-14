@@ -147,6 +147,47 @@ Some of the default dashboards you get access to are DNS Logs, Flow Logs, Audit 
     kubectl apply -f demo/50-alerts/unsanctioned.dns.access.yaml
     kubectl apply -f demo/50-alerts/unsanctioned.lateral.access.yaml
     ```
+
+# Module : Enable L7 Logs 
+
+L7 logs capture application interactions from HTTP header data in requests. Data shows what is actually sent in communications between specific pods, providing more specificity than flow logs. (Flow logs capture data only from connections for workload interactions).
+
+Calico collects L7 logs by sending the selected traffic through an Envoy proxy.
+
+## Steps
+
+1. create a Kubernetes pull secret for accessing Calico images, this should be provided by Tigera Team
+
+    ```bash
+    kubectl create secret generic tigera-pull-secret -n <application pod namespace> --from-file=.dockerconfigjson=<path/to/pull/secret> --type kubernetes.io/dockerconfigjson
+    ```
+2. Download the patch file to patch-envoy.yaml.
+
+    ```bash
+    curl https://docs.tigera.io/v3.7/manifests/l7/patch-envoy.yaml -O
+    ```
+3. Download the Envoy config.
+
+    ```bash
+    curl https://docs.tigera.io/v3.7/manifests/l7/envoy-config.yaml -O
+    ```
+
+4. Create the Envoy config.
+
+    ```bash
+    kubectl create configmap envoy-config -n <application pod namespace> --from-file=envoy-config.yaml
+    ```
+5. Configure Felix for log data collection.
+
+    ```bash
+    kubectl patch felixconfiguration default --type='merge' -p '{"spec":{"policySyncPathPrefix":"/var/run/nodeagent"}}'
+    ```
+6.  Install the envoy log collector
+
+    ```bash
+    kubectl patch deployment <name of application deployment> -n <namespace> --patch "$(cat patch-envoy.yaml)"
+    ```
+
 # Module 2: Using security controls
 
 **Goal:** Leverage network policies to segment connections within Kubernetes cluster and prevent known bad actors from accessing the workloads.
