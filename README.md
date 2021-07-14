@@ -368,7 +368,7 @@ After completeing module 3 some traffic should be generated, go check the "L7 HT
 
     The access should be denied as the policies configured in previous module do not allow it.
 
-3. nivigate in the flow visualizations chart to find out the source and destinations pods, also you can use policy recommendations to find out what traffic needs to be allowed 
+3. Navigate in the flow visualizations chart to find out the source and destinations pods, also you can use policy recommendations to create the new policies. 
 
  ![flow-visualization-m5](img/flow-visualization-m5.png)
 
