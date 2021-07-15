@@ -210,7 +210,7 @@ After completeing module 3 some traffic should be generated, go check the "L7 HT
 
 ## Tasks:
 1. Security Team require applying rule to disable all traffic by default.
-2. Dev team provided their application trtaffic reqirements and only connections between the components within each namespaces should be allowed as configured by the policies.
+2. DevOps team provided their application traffic reqirements and only connections between the components within each namespaces should be allowed as configured by the policies.
 
 ## Steps
 
