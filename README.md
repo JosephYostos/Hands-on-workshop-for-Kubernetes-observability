@@ -219,22 +219,15 @@ After completeing module 3 some traffic should be generated, go check the "L7 HT
     a. Test connectivity between workloads within each namespace.
 
     ```bash
-    # test connectivity within dev namespace
     kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://nginx-svc 2>/dev/null | grep -i http'
-
-    # test connectivity within default namespace
     kubectl exec -it $(kubectl get po -l app=loadgenerator -ojsonpath='{.items[0].metadata.name}') -- sh -c 'curl -m3 -sI frontend 2>/dev/null | grep -i http'
-
     kubectl exec -it $(kubectl get po -l app=frontend -ojsonpath='{.items[0].metadata.name}') -c server -- sh -c 'nc -zv productcatalogservice 3550'
     ```
 
     b. Test connectivity across namespaces.
 
     ```bash
-    # test connectivity from dev namespace to default namespace
     kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://frontend.default 2>/dev/null | grep -i http'
-
-    # test connectivity from default namespace to dev namespace
     kubectl exec -it $(kubectl get po -l app=loadgenerator -ojsonpath='{.items[0].metadata.name}') -- sh -c 'curl -m3 -sI http://nginx-svc.dev 2>/dev/null | grep -i http'
     ```
 
