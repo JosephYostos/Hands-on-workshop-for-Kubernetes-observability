@@ -9,28 +9,6 @@ In this workship we are going to focus on these main use cases:
 - Dynamic Packet Capture to analyze traffic on a pod or collection of pods live 
 - Application (L7) observability
 
-
-## Prerequisites 
-1. Download this repo into your environment:
-
-```bash
- git clone https://github.com/JosephYostos/Hands-on-workshop-for-Kubernetes-observability.git  
-```
-2. Configure log aggregation and flush intervals.
-
-```bash
- kubectl patch felixconfiguration.p default -p '{"spec":{"flowLogsFlushInterval":"10s"}}'
- kubectl patch felixconfiguration.p default -p '{"spec":{"dnsLogsFlushInterval":"10s"}}'
- kubectl patch felixconfiguration.p default -p '{"spec":{"flowLogsFileAggregationKindForAllowed":1}}'
-```
-
-3. Configure Felix for log data collection.
-
-    >[Felix](https://docs.tigera.io/reference/architecture/overview#felix) is one of Calico components that is responsible for configuring routes, ACLs, and anything else required on the host to provide desired connectivity for the endpoints on that host.
-
-```bash
- kubectl patch felixconfiguration default --type='merge' -p '{"spec":{"policySyncPathPrefix":"/var/run/nodeagent","l7LogsFileEnabled":true}}'
-```
     
 ## Module 0: Observability tools overview
 
@@ -99,9 +77,33 @@ In this workship we are going to focus on these main use cases:
 
 Some of the default dashboards you get access to are DNS Logs, Flow Logs, Audit Logs, Kuernetes API calls, L7 HTTP metrics, and others.
 
+
+## Prerequisites 
+1. Download this repo into your environment:
+
+```bash
+ git clone https://github.com/JosephYostos/Hands-on-workshop-for-Kubernetes-observability.git  
+```
+2. Configure log aggregation and flush intervals.
+
+```bash
+ kubectl patch felixconfiguration.p default -p '{"spec":{"flowLogsFlushInterval":"10s"}}'
+ kubectl patch felixconfiguration.p default -p '{"spec":{"dnsLogsFlushInterval":"10s"}}'
+ kubectl patch felixconfiguration.p default -p '{"spec":{"flowLogsFileAggregationKindForAllowed":1}}'
+```
+
+3. Configure Felix for log data collection.
+
+    >[Felix](https://docs.tigera.io/reference/architecture/overview#felix) is one of Calico components that is responsible for configuring routes, ACLs, and anything else required on the host to provide desired connectivity for the endpoints on that host.
+
+```bash
+ kubectl patch felixconfiguration default --type='merge' -p '{"spec":{"policySyncPathPrefix":"/var/run/nodeagent","l7LogsFileEnabled":true}}'
+```
+
+
 # Module 1: Configuring Environment
 
-## Requirements:
+## Tasks:
 
 1. security and Kubernetes platform policies should be evaluated before any other policies.
 2. kubernetes platform team require an explicitly allow workloads to connect to kubernetes DNS component.
@@ -154,7 +156,7 @@ L7 logs capture application interactions from HTTP header data in requests. Data
 
 Calico collects L7 logs by sending the selected traffic through an Envoy proxy.
 
-## Requirements:
+## Tasks:
 
 1. Enable L7 logging on frontend deployment in default ns and dev-nginx in dev ns.
 
@@ -206,7 +208,7 @@ After completeing module 3 some traffic should be generated, go check the "L7 HT
 **Goal:** Leverage network policies to segment connections within Kubernetes cluster and prevent known bad actors from accessing the workloads.
 
 
-## Requirements:
+## Tasks:
 1. Security Team require applying rule to disable all traffic by default.
 2. Dev team provided their application trtaffic reqirements and only connections between the components within each namespaces should be allowed as configured by the policies.
 
